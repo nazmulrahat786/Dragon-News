@@ -1,13 +1,22 @@
-import React, { use } from 'react';
-import { Link } from 'react-router';
+import React, { use, useState } from 'react';
+import { Link, Navigate, useNavigate } from 'react-router';
 import { AuthContext } from '../../../provider/AurhProvider';
 
 const Register = () => {
-  const {creatUser,setUser}= use(AuthContext)
+  const navigate = useNavigate()
+  const {creatUser,setUser,updateUser}= use(AuthContext)
+  const [nameError, setNameError] = useState('')
   const handleRegister = (e) => {
     e.preventDefault();
     const form = e.target;
     const name = form.name.value;
+    if(name.length < 5){
+      setNameError('Name must be at least 3 characters long');
+      return;
+    }
+    else{
+      setNameError('')
+    }
     const photo= form.photo.value;
     const email = form.email.value;
     const password = form.password.value;
@@ -15,7 +24,17 @@ const Register = () => {
 creatUser(email, password)
     .then(result => {
       const user = result.user;
-      setUser(user)
+      updateUser({displayName: name, photoURL: photo}).then(()=>{
+        setUser({...user, displayName: name, photoURL: photo})
+      navigate('/')
+      })
+      .catch((error) => {
+        // An error occurred
+        // ...
+        console.log(error);
+      });
+   
+    
     
     })
     .catch((error) => {
@@ -35,8 +54,9 @@ creatUser(email, password)
             {/* name */}
             <label className="label">Name</label>
             <input required type="text" className="input" name='name' placeholder="Name" />
+            {nameError && <p className='text-red-500 text-center'>{nameError}</p>}
             {/*Photo URl */} 
-            <label className="label">Name</label>
+            <label className="label">Photo URL</label>
             <input required type="text" name='photo' className="input" placeholder="Photo URl " />
 
             {/* email */}

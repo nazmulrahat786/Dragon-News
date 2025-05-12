@@ -1,7 +1,8 @@
 import { FaEye, FaStar } from "react-icons/fa";
+import { Link } from "react-router";
 
 const NewsCard = ({ news }) => {
-  const {
+  const {id,
     title,
     thumbnail_url,
     author,
@@ -44,7 +45,7 @@ const NewsCard = ({ news }) => {
         />
         <p className="text-sm text-gray-700">
           {details.length > 200 ? details.slice(0, 200) + "..." : details}
-          <span className="text-primary font-medium ml-1 cursor-pointer">Read More</span>
+          <Link to={`/news-details/${id}`} className="text-black font-bold ml-1 cursor-pointer">Read More</Link>
         </p>
       </div>
 

@@ -1,6 +1,6 @@
 import React, { use } from 'react';
 import { Link, NavLink } from 'react-router';
-import users from '../assets/user.png';
+import userIcon from '../assets/user.png';
 import { AuthContext } from '../provider/AurhProvider';
 const Navbar = () => {
     const {user,logOut} = use(AuthContext)
@@ -29,7 +29,7 @@ const Navbar = () => {
 
            </div>
            <div className="login-btn flex gap-5 items-center">
-            <img src={users} alt="" />
+            <img className='w-15' src={`${user ? user.photoURL : userIcon}`} alt="" />
            {
             user ? 
 <button onClick={handleLogout} className='btn btn-primary px-10'>LogOut</button>

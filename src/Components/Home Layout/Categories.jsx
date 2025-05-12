@@ -4,7 +4,7 @@ const catagoryPromis = fetch("/categories.json").then(res => res.json());
 
 const Categories = () => {
     const catagories = use(catagoryPromis);
-    console.log(catagories);
+    // console.log(catagories);
     return (
         <div>
             <h1 className='font-bold'>All Catagories</h1>
